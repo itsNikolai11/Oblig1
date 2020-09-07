@@ -28,7 +28,6 @@ public class Oblig1 {
         if (a.length == 0) {
             throw new NoSuchElementException("Arrayet inneholder ingen verdier!");
         }
-        int maks = a[0];
         for (int i = 0; i < a.length - 1; i++) {
             int verdi = a[i];
             if (a[i] > a[i + 1]) {
@@ -51,10 +50,6 @@ public class Oblig1 {
         }
         return ombyttinger;
     }
-    /**
-     * I tabellen a blir det flest ombyttinger når det største tallet kommer tidlig i tabellen.
-     *
-     */
 
     /**
      * Oppgave 2
@@ -92,18 +87,69 @@ public class Oblig1 {
      * Oppgave 4
      */
     public static void delsortering(int[] a) {
-        int value = a[0];
+        sort(a, 0, a.length - 1);
+
+        /*if (a.length <= 1) {
+            return;
+        }
+        int value;
         int left = 0;
         int right = a.length - 1;
         for (int i = 0; i < a.length; i++) {
-            if (a[i] % 2 == 0) {
-                //Tallet er et partall
-            } else {
-                //tallet er et oddetall
+            while (a[right] % 2 == 0) {
+                right--;
+            }
+            while (a[left] % 2 == 1) {
+                left++;
+            }
+            if (left < right) {
+                value = a[left];
+                a[left] = a[right];
+                a[right] = value;
+            }
+        }*/
+    }
 
+    static void sort(int[] a, int left, int right) {
+        if (left < right) {
+            int pi = quicksortEO(a, left, right);
+            sort(a, left, right - 1);
+            sort(a, left + 1, right);
+        }
+    }
+
+    static int quicksort(int[] a, int start, int end) {
+        int pivot = a[end];
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (a[j] <= pivot) {
+                i++;
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
             }
         }
+        int temp = a[i + 1];
+        a[i + 1] = a[end];
+        a[end] = temp;
+        return i + 1;
+    }
 
+    static int quicksortEO(int[] a, int left, int right) {
+        int pivot = a[right];
+        int i = left - 1;
+        for (int j = left; j < right; j++) {
+            if (a[j] <= pivot) {
+                i++;
+                int temp = a[i];
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+        int temp = a[i + 1];
+        a[i + 1] = a[right];
+        a[right] = temp;
+        return i + 1;
     }
 
     /**
@@ -126,11 +172,27 @@ public class Oblig1 {
      * Oppgave 7
      */
     public static String flett(String s, String t) {
-
-        return s;
+        StringBuilder flettet = new StringBuilder();
+        int i = 0, j = 0;
+        while (i < s.length() && j < t.length()) {
+            flettet.append(s.charAt(i));
+            i++;
+            flettet.append(t.charAt(j));
+            j++;
+        }
+        while (i < s.length()) {
+            flettet.append(s.charAt(i));
+            i++;
+        }
+        while (j < t.length()) {
+            flettet.append(t.charAt(j));
+            j++;
+        }
+        return flettet.toString();
     }
 
     public static String flett(String... s) {
+
 
         return s.toString();
     }
