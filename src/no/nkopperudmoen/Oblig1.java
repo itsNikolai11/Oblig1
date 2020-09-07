@@ -6,20 +6,9 @@ import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class Oblig1 {
-    /**
-     * Nikolai Kopperudmoen, stud.nr s344169
+    /*
+      Nikolai Kopperudmoen, stud.nr s344169
      */
-
-    public static void main(String[] args) {
-        int[] a = {4, 3, 5, 1};
-        int[] b = {1, 2, 4, 3};
-        int[] c = {};
-        System.out.println(maks(a));
-        System.out.println(ombyttinger(a));
-        System.out.println(ombyttinger(b));
-        System.out.println(antallUlikeSortert(b));
-    }
-
     /**
      * Oppgave 1
      */
@@ -112,7 +101,7 @@ public class Oblig1 {
 
     static void sort(int[] a, int left, int right) {
         if (left < right) {
-            int pi = quicksortEO(a, left, right);
+            quicksortEO(a, left, right);
             sort(a, left, right - 1);
             sort(a, left + 1, right);
         }
@@ -135,21 +124,23 @@ public class Oblig1 {
         return i + 1;
     }
 
-    static int quicksortEO(int[] a, int left, int right) {
-        int pivot = a[right];
-        int i = left - 1;
-        for (int j = left; j < right; j++) {
-            if (a[j] <= pivot) {
-                i++;
-                int temp = a[i];
-                a[i] = a[j];
-                a[j] = temp;
+    static void quicksortEO(int[] a, int left, int right) {
+        while (left < right) {
+            int i = left - 1;
+            int pivot = a[right];
+            for (int l = left; l < right; l++) {
+                if (a[l] <= pivot) {
+                    i++;
+                    left++;
+                    int temp = a[i];
+                    a[i] = a[l];
+                    a[l] = temp;
+                }
             }
+            int temp = a[i + 1];
+            a[i + 1] = a[right];
+            a[right] = temp;
         }
-        int temp = a[i + 1];
-        a[i + 1] = a[right];
-        a[right] = temp;
-        return i + 1;
     }
 
     /**
@@ -192,9 +183,19 @@ public class Oblig1 {
     }
 
     public static String flett(String... s) {
+        StringBuilder flettet = new StringBuilder();
+
+        for (int b = 0; b < 8; b++) {
+            for (String value : s) {
+                if (!(value.length() <= b)) {
+                    flettet.append(value.charAt(b));
+                }
 
 
-        return s.toString();
+            }
+        }
+        System.out.println(flettet.toString());
+        return flettet.toString();
     }
 
 }
