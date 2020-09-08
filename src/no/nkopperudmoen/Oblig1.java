@@ -1,6 +1,7 @@
 package no.nkopperudmoen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class Oblig1 {
@@ -9,6 +10,7 @@ public class Oblig1 {
      * Nikolai Kopperudmoen, stud.nr s344169
      * Oppgave 1
      */
+
     public static int maks(int[] a) {
 
         if (a.length == 0) {
@@ -73,13 +75,59 @@ public class Oblig1 {
      * Oppgave 4
      */
     public static void delsortering(int[] a) {
+        if (a.length == 1) {
+            return;
+        }
+        sortOddEven(a, 0, a.length - 1);
         int left = 0;
-        int right = a.length - 1;
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] % 2 == 0) {
+                left = i;
+                break;
+            }
+        }
+        sortAscending(a, left, a.length-1);
+        sortAscending(a, 0, left - 1);
+    }
+
+    static void sortAscending(int[] a, int left, int right) {
+        if (left < right) {
+            int p = quicksort(a, left, right);
+            sortAscending(a, left, p - 1);
+            sortAscending(a, p + 1, right);
+        }
+
+
+    }
+
+    static int quicksort(int[] a, int left, int right) {
+        int i = left - 1;
+        for (int j = left; j <= right-1; j++) {
+            if (a[j] <= a[right]) {
+                i++;
+                int value = a[i];
+                a[i] = a[j];
+                a[j] = value;
+            }
+        }
+        int temp = a[i+1];
+        a[i+1] = a[right];
+        a[right] = temp;
+        return i + 1;
+    }
+
+    public static void sortOddEven(int[] a, int left, int right) {
         for (int i = 0; i < a.length; i++) {
             while (a[right] % 2 == 0) {
+                if (right == 0) {
+                    break;
+                }
                 right--;
             }
             while (a[left] % 2 != 0) {
+                if (left == a.length - 1) {
+                    break;
+                }
                 left++;
             }
             if (left < right) {
@@ -88,38 +136,8 @@ public class Oblig1 {
                 a[right] = temp;
             }
         }
-        left = 0;
-        right = a.length - 1;
-        int pivot = 0;
-        for (int i = 0; i < a.length; i++) {
-            if (a[i] % 2 == 0) {
-                left = i;
-                pivot = i;
-                break;
-            }
-        }
-        if (pivot == 0) {
-            return;
-        }
-        while (left <= right) {
-            if (a[left] > a[right]) {
-                int temp = a[right];
-                a[right] = a[left];
-                a[left] = temp;
-            }
-            right--;
-        }
-        right = pivot - 1;
-        left = 0;
-        while (left <= right) {
-            if (a[left] > a[right]) {
-                int temp = a[right];
-                a[right] = a[left];
-                a[left] = temp;
-            }
-            left++;
-        }
     }
+
 
     /**
      * Oppgave 5
